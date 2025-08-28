@@ -2,7 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import toast from 'react-hot-toast'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://united.quantumlight.cc/api'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'api url 地址'
 
 // 创建axios实例
 const api = axios.create({
