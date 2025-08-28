@@ -67,11 +67,7 @@ npm run install:all
 npm install
 cd server && npm install
 cd ../client && npm install
-```
 
-### 配置环境
-1. 复制 `server/config.example.js` 为 `server/config.js`
-2. 填入相应的配置信息：
 
 ```javascript
 module.exports = {
