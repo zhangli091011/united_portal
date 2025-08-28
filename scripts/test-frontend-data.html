@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前端数据测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #1a1a1a; color: white; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #333; border-radius: 5px; }
+        .success { color: #4ade80; }
+        .error { color: #ef4444; }
+        .warning { color: #fbbf24; }
+        pre { background: #2a2a2a; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        button { background: #ff6b35; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #e55a2b; }
+    </style>
+</head>
+<body>
+    <h1>🔍 前端数据测试</h1>
+    
+    <div class="section">
+        <h2>1. 直接API测试</h2>
+        <button onclick="testDirectAPI()">测试直接API</button>
+        <div id="directResult"></div>
+    </div>
+    
+    <div class="section">
+        <h2>2. 前端代理测试</h2>
+        <button onclick="testProxyAPI()">测试代理API</button>
+        <div id="proxyResult"></div>
+    </div>
+    
+    <div class="section">
+        <h2>3. 登录并获取统计数据</h2>
+        <button onclick="testFullFlow()">完整流程测试</button>
+        <div id="fullResult"></div>
+    </div>
+
+    <script>
+        async function testDirectAPI() {
+            const result = document.getElementById('directResult');
+            result.innerHTML = '<p class="warning">正在测试直接API调用...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:3001/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        employeeCode: 'admin123',
+                        password: 'admin123',
+                        type: 'employee'
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const loginData = await response.json();
+                result.innerHTML = `
+                    <p class="success">✅ 直接API登录成功</p>
+                    <pre>${JSON.stringify(loginData, null, 2)}</pre>
+                `;
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ 直接API失败: ${error.message}</p>`;
+            }
+        }
+        
+        async function testProxyAPI() {
+            const result = document.getElementById('proxyResult');
+            result.innerHTML = '<p class="warning">正在测试代理API调用...</p>';
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        employeeCode: 'admin123',
+                        password: 'admin123',
+                        type: 'employee'
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const loginData = await response.json();
+                result.innerHTML = `
+                    <p class="success">✅ 代理API登录成功</p>
+                    <pre>${JSON.stringify(loginData, null, 2)}</pre>
+                `;
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ 代理API失败: ${error.message}</p>`;
+            }
+        }
+        
+        async function testFullFlow() {
+            const result = document.getElementById('fullResult');
+            result.innerHTML = '<p class="warning">正在执行完整流程测试...</p>';
+            
+            try {
+                // 1. 登录
+                const loginResponse = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        employeeCode: 'admin123',
+                        password: 'admin123',
+                        type: 'employee'
+                    })
+                });
+                
+                if (!loginResponse.ok) {
+                    throw new Error(`登录失败: ${loginResponse.status}`);
+                }
+                
+                const loginData = await loginResponse.json();
+                const token = loginData.data.token;
+                
+                // 2. 获取统计数据
+                const statsResponse = await fetch('/api/stats/dashboard', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!statsResponse.ok) {
+                    throw new Error(`统计数据获取失败: ${statsResponse.status}`);
+                }
+                
+                const statsData = await statsResponse.json();
+                
+                // 3. 获取报名数据
+                const regResponse = await fetch('/api/registrations?pageSize=50', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!regResponse.ok) {
+                    throw new Error(`报名数据获取失败: ${regResponse.status}`);
+                }
+                
+                const regData = await regResponse.json();
+                
+                // 4. 获取新闻数据
+                const newsResponse = await fetch('/api/news');
+                const newsData = await newsResponse.json();
+                
+                result.innerHTML = `
+                    <p class="success">✅ 完整流程测试成功</p>
+                    
+                    <h3>📊 统计数据:</h3>
+                    <pre>${JSON.stringify(statsData.data.overview, null, 2)}</pre>
+                    
+                    <h3>📋 报名数据:</h3>
+                    <p>总计: ${regData.data.items.length} 条</p>
+                    <pre>${JSON.stringify(regData.data.items.slice(0, 2), null, 2)}</pre>
+                    
+                    <h3>📰 新闻数据:</h3>
+                    <pre>${JSON.stringify(newsData.data, null, 2)}</pre>
+                `;
+                
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ 完整流程失败: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

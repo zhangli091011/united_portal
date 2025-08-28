@@ -1,0 +1,37 @@
+{
+  "name": "zhongchunwan-united-portal",
+  "version": "1.0.0",
+  "description": "中春晚 United Portal · 团队内网一站式平台",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "cd server && npm run dev",
+    "client:dev": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "setup": "node scripts/setup.js",
+    "hash-password": "node scripts/password-hash.js",
+    "create-table": "node scripts/create-test-table.js",
+    "test-api": "node scripts/test-api.js",
+    "debug-feishu": "node scripts/debug-feishu.js",
+    "test-login": "node scripts/test-login.js",
+    "test-admin-data": "node scripts/test-admin-data.js",
+    "debug-format": "node scripts/debug-formatRecord.js",
+    "test-frontend": "node scripts/test-frontend-api.js",
+    "debug-frontend": "node scripts/debug-frontend-api.js",
+    "test-browser": "node scripts/test-browser-access.js",
+    "debug-stats": "node scripts/debug-stats-data.js",
+    "debug-permissions": "node scripts/debug-feishu-permissions.js"
+  },
+  "keywords": ["portal", "registration", "management", "feishu"],
+  "author": "AdventureX Team",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

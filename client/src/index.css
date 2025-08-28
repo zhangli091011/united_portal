@@ -1,0 +1,382 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 字体定义 */
+@font-face {
+  font-family: 'DingTalk JinBuTi';
+  src: url('/DingTalk-JinBuTi.woff2') format('woff2'),
+       url('/DingTalk-JinBuTi.woff') format('woff'),
+       url('/DingTalk-JinBuTi.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  
+  body {
+    @apply bg-primary-light font-sans antialiased;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  /* 自定义滚动条 */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-primary-light-secondary;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary-orange rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-orange-hover;
+  }
+}
+
+@layer components {
+  .neon-text {
+    text-shadow: 0 0 10px rgba(255, 107, 53, 0.8);
+  }
+
+  .card-neon {
+    @apply bg-card-gradient-contrast backdrop-blur-sm border border-gray-300 rounded-xl;
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.12),
+      0 0 15px rgba(255, 107, 53, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+    transition: all 0.3s ease;
+  }
+
+  .card-neon:hover {
+    @apply border-primary-orange;
+    box-shadow: 
+      0 8px 30px rgba(0, 0, 0, 0.18),
+      0 0 25px rgba(255, 107, 53, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+    transform: translateY(-5px);
+  }
+
+  .btn-primary {
+    @apply bg-primary-orange hover:bg-primary-orange-hover text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300;
+    box-shadow: 0 0 15px rgba(255, 107, 53, 0.3);
+  }
+
+  .btn-primary:hover {
+    @apply shadow-neon-orange;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border-2 border-primary-orange text-primary-orange hover:bg-primary-orange hover:text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300;
+  }
+
+  .input-neon {
+    @apply bg-primary-light border border-gray-300 rounded-lg px-4 py-2 text-gray-900 placeholder-gray-500 focus:border-primary-orange focus:outline-none transition-colors duration-300;
+  }
+
+  .input-neon:focus {
+    box-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+  }
+}
+
+/* 动画效果 */
+@keyframes pulse-neon {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 107, 53, 0.6);
+  }
+}
+
+.animate-pulse-neon {
+  animation: pulse-neon 2s ease-in-out infinite;
+}
+
+/* Footer 深色样式 - 基于用户提供的HTML设计 */
+.footer-dark {
+  @apply bg-gray-800 text-gray-500 mt-auto;
+  padding: 48px 0;
+}
+
+.footer-container-dark {
+  @apply max-w-7xl mx-auto px-4;
+}
+
+.footer-content-dark {
+  @apply flex flex-wrap gap-5 mb-8 items-start justify-between;
+}
+
+.footer-section-dark:first-child {
+  @apply flex-none mr-6;
+}
+
+.footer-section-dark:not(:first-child) {
+  @apply flex-1;
+  min-width: 120px;
+  max-width: 180px;
+}
+
+.footer-section-dark {
+  @apply flex flex-col;
+}
+
+.footer-logo-section-dark {
+  @apply flex flex-col gap-2;
+}
+
+.footer-logo-dark {
+  width: 280px;
+  height: 70px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+.footer-logo-image {
+  @apply w-full h-full object-contain;
+}
+
+/* 响应式Footer Logo样式 */
+.footer-logo-responsive-dark {
+  margin-right: -15vw;
+  max-width: 100%;
+}
+
+.footer-logo-container-dark {
+  @apply flex flex-col items-start w-full relative;
+}
+
+.footer-logo-scaled-dark {
+  transform: scale(2);
+  transform-origin: left center;
+}
+
+.footer-description-responsive-dark {
+  @apply mt-2 text-left w-full ml-0;
+  font-size: clamp(10px, 2vw, 12px);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.footer-description-dark {
+  @apply text-gray-500 max-w-xs;
+  font-family: "DingTalk JinBuTi", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  margin-top: -2px;
+}
+
+.footer-title-dark {
+  @apply text-white mb-4;
+  font-family: "DingTalk JinBuTi", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 400;
+}
+
+.footer-links-dark {
+  @apply flex flex-col gap-2;
+}
+
+.footer-link-dark {
+  @apply text-gray-500 no-underline transition-colors cursor-pointer;
+  font-family: "SimHei", "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.footer-link-dark:hover {
+  @apply text-white;
+}
+
+.social-icons-dark {
+  @apply flex gap-5 mt-4;
+}
+
+.social-icon-dark {
+  @apply w-6 h-6 cursor-pointer transition-opacity;
+}
+
+.social-icon-dark:hover {
+  @apply opacity-80;
+}
+
+.social-icon-dark svg {
+  @apply w-full h-full fill-gray-500 transition-colors;
+}
+
+.social-icon-dark:hover svg {
+  @apply fill-white;
+}
+
+/* 特定社交媒体图标的旋转修正 */
+.social-svg-wechat {
+  transform: rotate(180deg);
+}
+
+.social-svg-bilibili {
+  transform: rotate(180deg);
+}
+
+.footer-copyright-dark {
+  @apply border-t border-gray-700 pt-8 text-center;
+  border-style: dashed;
+}
+
+.footer-copyright-text-dark {
+  @apply text-gray-500;
+  font-family: "SimHei", "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* 页脚响应式设计 */
+@media (max-width: 900px) {
+  .footer-content-dark {
+    @apply flex-wrap gap-3;
+  }
+  
+  .footer-section-dark:first-child {
+    @apply flex-auto w-full mb-4 mr-0;
+  }
+  
+  .footer-section-dark:not(:first-child) {
+    @apply flex-1;
+    min-width: 80px;
+    max-width: 140px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .footer-content-dark {
+    @apply flex-wrap gap-4;
+  }
+  
+  .footer-section-dark:first-child {
+    @apply flex-none mb-2 mr-4;
+  }
+  
+  .footer-section-dark:not(:first-child) {
+    @apply flex-1;
+    min-width: 100px;
+    max-width: 150px;
+  }
+
+  /* 响应式Footer Logo - 1200px以下 */
+  .footer-logo-responsive-dark {
+    margin-right: 0;
+  }
+
+  .footer-logo-scaled-dark {
+    transform: scale(1.8);
+    transform-origin: left center;
+  }
+
+  .footer-description-responsive-dark {
+    margin-left: 0;
+    font-size: clamp(9px, 1.8vw, 11px);
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-dark {
+    padding: 32px 0;
+  }
+  
+  .footer-content-dark {
+    @apply flex-col gap-5;
+  }
+  
+  .footer-section-dark:first-child {
+    @apply flex-none mb-3;
+  }
+  
+  .footer-section-dark:not(:first-child) {
+    @apply flex-none min-w-0;
+  }
+  
+  .footer-logo-dark {
+    width: 220px;
+    height: 55px;
+  }
+
+  /* 响应式Footer Logo - 768px以下 */
+  .footer-logo-responsive-dark {
+    margin-right: 0;
+  }
+
+  .footer-logo-scaled-dark {
+    transform: scale(1.5);
+    transform-origin: left center;
+  }
+
+  .footer-description-responsive-dark {
+    margin-left: 0;
+    font-size: clamp(8px, 2.5vw, 10px);
+  }
+  
+  .footer-description-dark {
+    font-size: 12px;
+    line-height: 16px;
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-content-dark {
+    @apply flex-col gap-4;
+  }
+  
+  .footer-section-dark {
+    @apply text-center;
+  }
+  
+  .footer-section-dark:first-child {
+    @apply text-left;
+  }
+  
+  .footer-logo-dark {
+    width: 180px;
+    height: 45px;
+    background-position: center;
+  }
+
+  /* 响应式Footer Logo - 480px以下 */
+  .footer-logo-responsive-dark {
+    margin-right: 0;
+  }
+
+  .footer-logo-scaled-dark {
+    transform: scale(1.2);
+    transform-origin: left center;
+  }
+
+  .footer-description-responsive-dark {
+    margin-left: 0;
+    font-size: clamp(7px, 3vw, 9px);
+    text-align: left;
+  }
+  
+  .footer-description-dark {
+    font-size: 11px;
+    line-height: 16px;
+    max-width: 180px;
+    margin-top: -1px;
+  }
+  
+  .social-icons-dark {
+    @apply justify-center;
+  }
+}

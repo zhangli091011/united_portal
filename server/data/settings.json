@@ -1,0 +1,15 @@
+{
+  "debug": {
+    "showDebugInfo": false,
+    "enableConsoleLog": true,
+    "showDataPanels": false
+  },
+  "ui": {
+    "theme": "light",
+    "enableAnimations": true
+  },
+  "system": {
+    "autoRefreshInterval": 30000,
+    "enableNotifications": true
+  }
+}
